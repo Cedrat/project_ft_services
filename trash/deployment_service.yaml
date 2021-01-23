@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: nginx-deployment
+    labels:
+        app: nginx
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: nginx
+    template:
+        metadata:
+            labels:
+                app: nginx
+        spec:
+            containers:
+            - name: nginx
+              imagePullPolicy: Never
+              image: nginx:latest
+              ports:
+              - containerPort: 80
+              - containerPort: 443
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: wordpress-deployment
+    labels:
+        app: wordpress
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: wordpress
+    template:
+        metadata:
+            labels:
+                app: wordpress
+        spec:
+            containers:
+            - name: wordpress
+              imagePullPolicy: Never
+              image: wordpress:latest
+              ports:
+              - containerPort: 5050
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: phpmyadmin-deployment
+    labels:
+        app: phpmyadmin
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: phpmyadmin
+    template:
+        metadata:
+            labels:
+                app: phpmyadmin
+        spec:
+            containers:
+            - name: phpmyadmin
+              imagePullPolicy: Never
+              image: phpmyadmin:latest
+              ports:
+              - containerPort: 5000
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: persistent-volume
+  labels:
+    app: mysql
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

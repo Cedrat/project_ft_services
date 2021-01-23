@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: influxdb-pv-claim
+  labels:
+    app: influxdb
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: influxdb-deployment
+    labels:
+        app: influxdb
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: influxdb
+    template:
+        metadata:
+            labels:
+                app: influxdb
+        spec:
+            containers:
+            - name: influxdb
+              imagePullPolicy: Never
+              image: influxdb:latest
+              ports:
+              - containerPort: 8086
+              env:
+              - name: INFLUXDB_USERNAME
+                value: admin
+              - name: INFLUXDB_PASSWORD
+                value: admin
+              volumeMounts:
+              - name: influxdb-persistent-storage
+                mountPath: /var/lib/influxdb
+            volumes:
+            - name: influxdb-persistent-storage
+              persistentVolumeClaim:
+                claimName: influxdb-pv-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-influxdb
+  annotations:
+    metallb.universe.tf/allow-shared-ip: shared
+spec:
+  selector:
+    app: influxdb
+  type: ClusterIP
+  ports:
+    - name: https
+      protocol: TCP
+      port: 8086
+      targetPort: 8086
