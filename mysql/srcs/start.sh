@@ -6,6 +6,7 @@ touch /run/openrc/softlevel
 mkdir /www/phpmyadmin/tmp
 chmod 777 /www/phpmyadmin/
 mysql -u root < start/start.sql
+mysql -u root < start/db_wordpress.sql
 mysql -u root < start/wordpress.sql
 mysql -u root < start/phpmyadmin.sql
 /etc/init.d/mariadb restart

@@ -20,6 +20,13 @@ spec:
               image: grafana:latest
               ports:
               - containerPort: 3000
+              livenessProbe:
+                  httpGet:
+                    path: ./
+                    port: 3000
+                    scheme: HTTPS
+                  initialDelaySeconds: 30
+                  periodSeconds: 3
 ---
 apiVersion: v1
 kind: Service

@@ -1,5 +1,6 @@
 FROM  alpine:3
 
+USER root
 RUN mkdir -p /run/nginx
 RUN apk update
 RUN apk add --no-cache --upgrade bash

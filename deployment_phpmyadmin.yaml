@@ -27,6 +27,13 @@ spec:
                 value: "3306"
               - name: MYSQL_ROOT_PASSWORD
                 value: root
+              livenessProbe:
+                httpGet:
+                  path: ./phpmyadmin/
+                  port: 5000
+                  scheme: HTTPS
+                initialDelaySeconds: 30
+                periodSeconds: 3
 
 ---
 apiVersion: v1
