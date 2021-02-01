@@ -81,12 +81,12 @@ define( 'WP_DEBUG', false );
 
 /* That's all, stop editing! Happy publishing. */
 
-/** Absolute path to the WordPress directory. */
+/* Absolute path to the WordPress directory. */
 if ( ! defined( 'ABSPATH' ) ) {
 	define( 'ABSPATH', __DIR__ . '/' );
 }
 
-define('WP_SITEURL', 'http://'.$_SERVER['HTTP_HOST']);
-define('WP_HOME', 'http://'.$_SERVER['HTTP_HOST']);
+/*define('WP_SITEURL', 'https://'.$_SERVER['HTTP_HOST']);
+define('WP_HOME', 'https://'.$_SERVER['HTTP_HOST']);
 /** Sets up WordPress vars and included files. */
 require_once ABSPATH . 'wp-settings.php';
