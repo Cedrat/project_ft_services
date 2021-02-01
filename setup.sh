@@ -1,6 +1,7 @@
 #!/bin/bash
 sudo apt-get install conntrack
 sudo minikube start --vm-driver=none
+sed -i  "s/x.x.x.x/$(minikube ip)/g" config.yaml
 eval $(minikube docker-env)
 docker build ./nginx -t nginx
 docker build ./wordpress -t wordpress
