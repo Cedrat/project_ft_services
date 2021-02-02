@@ -1,6 +1,5 @@
 FROM  alpine:3
 
-USER root
 RUN apk update
 RUN apk add --no-cache --upgrade bash
 RUN apk add openrc
